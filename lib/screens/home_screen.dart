@@ -1,28 +1,20 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:food_delivery_app/controller/main_controller.dart';
 import 'package:get/get.dart';
 
-import '../controller/index_controller.dart';
 import '../utils/colors.dart';
 import '../utils/font.dart';
 
-
-// ignore: must_be_immutable
 class HomePage extends StatelessWidget {
-   HomePage({Key? key}) : super(key: key);
-
-  IndexController homeController = Get.put(IndexController());
+  const HomePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        minimum: const EdgeInsets.only(
-          top: 20,
-          left: 10,
-          right: 10,
-        ),
-        child: Column(
+    return GetBuilder(
+      init: MainController(),
+      builder: (Object controller) {
+        return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
@@ -101,8 +93,8 @@ class HomePage extends StatelessWidget {
                     ClipRRect(
                       borderRadius: BorderRadius.circular(10),
                       child: Container(
-                        width: Get.width/5,
-                        height: Get.height/10,
+                        width: Get.width / 5,
+                        height: Get.height / 10,
                         color: Colors.green,
                       ),
                     ),
@@ -118,45 +110,8 @@ class HomePage extends StatelessWidget {
               ],
             )
           ],
-        ),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: homeController.index,
-        onTap: homeController.pageIndex,
-        unselectedItemColor: Colors.black.withOpacity(0.7),
-        type: BottomNavigationBarType.fixed,
-        selectedItemColor: AppColor.themeColor,
-        selectedFontSize: 12,
-        unselectedFontSize: 12,
-        showSelectedLabels: true,
-        showUnselectedLabels: true,
-        items: const [
-          BottomNavigationBarItem(
-            activeIcon: Icon(CupertinoIcons.house_fill),
-            icon: Icon(CupertinoIcons.home),
-            label: "Home",
-            tooltip: "Home",
-          ),
-          BottomNavigationBarItem(
-            activeIcon: Icon(CupertinoIcons.tag_fill),
-            icon: Icon(CupertinoIcons.tag),
-            label: "Offers",
-            tooltip: "Offers",
-          ),
-          BottomNavigationBarItem(
-            activeIcon: Icon(CupertinoIcons.cart_fill),
-            icon: Icon(CupertinoIcons.cart),
-            label: "Cart",
-            tooltip: "Cart",
-          ),
-          BottomNavigationBarItem(
-            activeIcon: Icon(CupertinoIcons.heart_fill),
-            icon: Icon(CupertinoIcons.heart),
-            label: "Like",
-            tooltip: "Like",
-          ),
-        ],
-      ),
+        );
+      },
     );
   }
 }
