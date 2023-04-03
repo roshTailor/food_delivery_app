@@ -21,14 +21,14 @@ samples, guidance on mobile development, and a full API reference.
     <td><img src="assets/output/food/4.png" </td>
   </tr>
   <tr>
-    <td><img src="assets/image/output/food/5.png" </td>
-      <td><img src="assets/image/output/food/6.png" </td>
-        <td><img src="assets/image/output/food/7.png" </td>
+    <td><img src="assets/output/food/5.png" </td>
+      <td><img src="assets/output/food/6.png" </td>
+        <td><img src="assets/output/food/7.png" </td>
   </tr>
   
   <tr>
-    <td><img src="assets/image/output/food/8.png" </td>
-      <td><img src="assets/image/output/food/9.png" </td>
+    <td><img src="assets/output/food/8.png" </td>
+      <td><img src="assets/output/food/9.png" </td>
       
   </tr>
 </table>
