@@ -16,9 +16,9 @@ For help getting started with Flutter development, view the
 samples, guidance on mobile development, and a full API reference.
 <table>
   <tr>
-    <td><img src="assets/image/output/food/2.png" </td>
-    <td><img src="assets/image/output/food/3.png" </td>
-    <td><img src="assets/image/output/food/4.png" </td>
+    <td><img src="assets/output/food/2.png" </td>
+    <td><img src="assets/output/food/3.png" </td>
+    <td><img src="assets/output/food/4.png" </td>
   </tr>
   <tr>
     <td><img src="assets/image/output/food/5.png" </td>
