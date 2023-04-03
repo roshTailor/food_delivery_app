@@ -16,7 +16,7 @@ For help getting started with Flutter development, view the
 samples, guidance on mobile development, and a full API reference.
 <table>
   <tr>
-    <td> <img src="https://user-images.githubusercontent.com/120237924/229587692-7fc3f457-3278-43ff-b91d-2032bf162d88.png"  alt="1" width = 360px height = 640px ></td>
+    <td> <img src="https://user-images.githubusercontent.com/120237924/229587692-7fc3f457-3278-43ff-b91d-2032bf162d88.png" ></td>
 
     <td><img src="img2.png" alt="2" width = 360px height = 640px></td>
    </tr> 
