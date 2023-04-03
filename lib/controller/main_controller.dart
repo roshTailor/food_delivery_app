@@ -1,15 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../screens/cart_screen.dart';
 import '../screens/fav_screen.dart';
 import '../screens/home_screen.dart';
 import '../screens/profile_screen.dart';
+import '../utils/colors.dart';
 
 class MainController extends GetxController {
   static MainController mainController = Get.put(MainController());
-
-  //CollectionReference favouriteFood = FirebaseFirestore.instance.collection('favouriteFood');
+  CollectionReference food = FirebaseFirestore.instance.collection('food');
   int index = 0;
   int currentCategory = 0;
   List categoryTab = [
@@ -71,59 +72,46 @@ class MainController extends GetxController {
     update();
   }
 
-  quantityIncrement(int index, int qty) async {
+  quantityIncrement(String index, int qty) async {
     if (qty > 0) qty++;
-    CollectionReference food = FirebaseFirestore.instance.collection('food');
-    var docSnap = await food.get();
-    var docId = docSnap.docs;
     update();
     return food
-        .doc(docId[index].id)
+        .doc(index)
         .update({'foodQuantity': qty})
         .then((value) => print("Value Updated..."))
         .catchError((error) => print("Error :: $error"));
   }
 
-  quantityDecrement(int index, int qty) async {
+  quantityDecrement(String index, int qty) async {
     if (qty > 1) qty--;
-    CollectionReference food = FirebaseFirestore.instance.collection('food');
-    var doc_snap = await food.get();
-    var doc_id = doc_snap.docs;
     update();
     return food
-        .doc(doc_id[index].id)
+        .doc(index)
         .update({'foodQuantity': qty})
         .then((value) => print("Value Updated..."))
         .catchError((error) => print("Error :: $error"));
   }
-
-/*updateFavourite(int index, bool val) async {
-    CollectionReference foods = FirebaseFirestore.instance
-        .collection('foodsProduct')
-        .doc(HomeController.homeController.category.value)
-        .collection(HomeController.homeController.category.value);
-    var doc_snap = await foods.get();
-    var doc_id = doc_snap.docs;
-    return foods
-        .doc(doc_id[index].id)
-        .update({'fav': !val})
+  addCart(String id, bool val) {
+    snackBar(context) {
+      return ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: !val?const Text("Added to cart"):const Text("Removed from cart"),
+        backgroundColor: AppColor.themeColor,
+      ));
+    }
+    update();
+    return food
+        .doc(id)
+        .update({'foodQuantity': 1, 'foodInCart': !val,})
         .then((value) => print("Value Updated..."))
         .catchError((error) => print("Error :: $error"));
   }
 
-  insertFoodFav(QueryDocumentSnapshot data) async {
-    var doc_snap = await favouriteFood.get();
-    var doc_id = doc_snap.docs;
-    if(data['fav'] == false) {
-      Food food = Food(name: data['name'], img: data['img'], price: data['price'], qty: data['qty'], cart: data['cart'], fav: data['fav']);
-      for(int i = 0 ; i < doc_id.length ; i++) {
-        if(doc_id[i]['name'] != data['name']) {
-          return favouriteFood
-              .add(food.toMap())
-              .then((value) => print("Value Added..."))
-              .catchError((error) => print("Error :: $error"));
-        }
-      }
-    }
-  }*/
+  updateFavourite(String id, bool val) {
+    update();
+    return food
+        .doc(id)
+        .update({'foodInFavourite': !val})
+        .then((value) => print("Added to favourite"))
+        .catchError((error) => print("Error :: $error"));
+  }
 }

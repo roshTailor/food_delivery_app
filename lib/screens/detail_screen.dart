@@ -27,7 +27,8 @@ class FoodDetails extends StatelessWidget {
                 child: Stack(
                   children: [
                     Padding(
-                      padding: const EdgeInsets.all(20),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 5, vertical: 5),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -37,17 +38,12 @@ class FoodDetails extends StatelessWidget {
                                 color: AppColor.placeholderBg),
                             color: AppColor.placeholderBg.withOpacity(0.2),
                           ),
-                          const Text(
-                            "Food Details",
-                            style: TextStyle(
-                                fontSize: 18, color: AppColor.placeholderBg),
-                          ),
                           IconButton(
                             onPressed: () {},
                             icon: (food['foodInFavourite'])
-                                ? Icon(
+                                ? const Icon(
                                     CupertinoIcons.heart_fill,
-                                    color: AppColor.themeColor,
+                                    color: AppColor.placeholderBg,
                                   )
                                 : const Icon(
                                     CupertinoIcons.heart,
@@ -58,31 +54,29 @@ class FoodDetails extends StatelessWidget {
                         ],
                       ),
                     ),
-                    Positioned(
-                      bottom: 0,
+                    Align(
+                      alignment: Alignment.bottomCenter,
                       child: Container(
                         padding: const EdgeInsets.all(15),
                         height: ScreenSize.height * 0.7,
                         width: ScreenSize.width,
                         decoration: const BoxDecoration(
                           color: AppColor.placeholderBg,
-                          borderRadius: BorderRadius.vertical(
-                              top: Radius.circular(50)),
+                          borderRadius:
+                              BorderRadius.vertical(top: Radius.circular(50)),
                         ),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            const SizedBox(height: 100),
+                            const SizedBox(height: 80),
                             Row(
                               children: [
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text(
-                                      food['foodName'],
-                                      style: AppFont.bodyText1
-                                    ),
+                                    Text(food['foodName'],
+                                        style: AppFont.bodyText2),
                                     Text(
                                       "\$ ${food['foodPrice']}",
                                       style: TextStyle(
@@ -90,74 +84,93 @@ class FoodDetails extends StatelessWidget {
                                         color: AppColor.themeColor,
                                       ),
                                     ),
-                                  ],
-                                ),
-                                const Spacer(),
-                                Container(
-                                  width: ScreenSize.width * 0.3,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(20),
-                                      color: AppColor.themeColor,
-                                      boxShadow: [
-                                        BoxShadow(
-                                            color:
-                                                Colors.black.withOpacity(0.1),
-                                            spreadRadius: 0.5,
-                                            blurRadius: 2,
-                                            offset: const Offset(0, 3))
-                                      ]),
-                                  child: Center(
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
+                                    Row(
                                       children: [
                                         IconButton(
-                                            onPressed: () =>
-                                                controller.quantityDecrement(
-                                                    index, food['foodQuantity']),
-                                            icon: const Icon(
-                                              Icons.remove,
-                                              color: AppColor.placeholderBg,
-                                            )),
-                                        Text(
-                                          "${food['foodQuantity']}",
-                                          style: const TextStyle(
-                                              fontSize: 20,
-                                              color: AppColor.placeholderBg,
-                                              fontWeight: FontWeight.bold),
+                                          onPressed: () {},
+                                          constraints: const BoxConstraints(maxWidth: 20),
+                                          icon: Icon(
+                                            Icons.star_rate_rounded,
+                                            color: AppColor.themeColor,
+                                          ),
+                                          splashRadius: 1,
                                         ),
                                         IconButton(
-                                            onPressed: () =>
-                                                controller.quantityIncrement(
-                                                    index, food['foodQuantity']),
-                                            icon: const Icon(
-                                              Icons.add,
-                                              color: AppColor.placeholderBg,
-                                            )),
+                                          onPressed: () {},constraints: const BoxConstraints(maxWidth: 20),
+                                          icon: Icon(
+                                            Icons.star_rate_rounded,
+                                            color: AppColor.themeColor,
+                                          ),
+                                          splashRadius: 1,
+                                        ),
+                                        IconButton(
+                                          onPressed: () {},constraints: const BoxConstraints(maxWidth: 20),
+                                          icon: Icon(
+                                            Icons.star_rate_rounded,
+                                            color: AppColor.themeColor,
+                                          ),
+                                          splashRadius: 1,
+                                        ),
+                                        IconButton(
+                                          onPressed: () {},constraints: const BoxConstraints(maxWidth: 20),
+                                          icon: Icon(
+                                            Icons.star_rate_rounded,
+                                            color: AppColor.themeColor,
+                                          ),
+                                          splashRadius: 1,
+                                        ),
+                                        IconButton(
+                                          onPressed: () {},constraints: const BoxConstraints(maxWidth: 20),
+                                          icon: const Icon(
+                                            Icons.star_rate_rounded,
+                                            color: AppColor.placeholder,
+                                          ),
+                                          splashRadius: 1,
+                                        ),
                                       ],
-                                    ),
-                                  ),
-                                )
+                                    )
+                                  ],
+                                ),
+
                               ],
                             ),
-                            const SizedBox(height: 30),
+                            const SizedBox(height: 10),
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: const [
-                                Text(
-                                  "⌚ 20 Min",
-                                  style: TextStyle(
-                                      color: AppColor.placeholderBg, fontSize: 16),
-                                ),
-                                Text(
-                                  "🔥 100 Kcal",
-                                  style: TextStyle(
-                                      color: AppColor.placeholderBg, fontSize: 16),
-                                ),
-                                Text(
-                                  "⭐ 4.5",
-                                  style: TextStyle(
-                                      color: AppColor.placeholderBg, fontSize: 16),
+                              children: [
+                                Text("Quantity",style: AppFont.bodyText2,),const SizedBox(width: 20),
+                                Center(
+                                  child: Row(
+                                    mainAxisAlignment:
+                                    MainAxisAlignment.center,
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: [
+                                      IconButton(
+                                          onPressed: () =>
+                                              controller.quantityDecrement(
+                                                  food.id,
+                                                  food['foodQuantity']),
+                                          icon: const Icon(
+                                            Icons.remove_circle,
+                                            color: AppColor.placeholder,size: 40,
+                                          )),
+                                      Text(
+                                        "${food['foodQuantity']}",
+                                        style:  TextStyle(
+                                            fontSize: 20,
+                                            color: AppColor.themeColor,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      IconButton(
+                                          onPressed: () =>
+                                              controller.quantityIncrement(
+                                                  food.id,
+                                                  food['foodQuantity']),
+                                          icon: const Icon(
+                                            Icons.add_circle,
+                                            color: AppColor.placeholder,size:40
+                                          )),
+                                    ],
+                                  ),
                                 ),
                               ],
                             ),
@@ -165,16 +178,15 @@ class FoodDetails extends StatelessWidget {
                             const Text(
                               "About food",
                               style: TextStyle(
-                                  fontSize: 20, fontWeight: FontWeight.w600),
+                                  fontSize: 21, fontWeight: FontWeight.w600),
                             ),
-                            const Text(
+                            const SizedBox(height: 6),
+                             Text(
                               "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. ",
-                              style: TextStyle(color: AppColor.placeholderBg),
-                            ),
-                            const Spacer(),
+                              style: AppFont.bodyText1,
+                            ),const SizedBox(height: 20),
                             InkWell(
-                              // onTap: () => controller.addCart(
-                              //     context, index, food['cart']),
+                              onTap: () => controller.addCart( food.id, food['foodInCart']),
                               child: Container(
                                 height: 55,
                                 width: ScreenSize.width,
@@ -207,7 +219,7 @@ class FoodDetails extends StatelessWidget {
                       top: ScreenSize.height * 0.13,
                       child: Container(
                         alignment: Alignment.center,
-                        height: 160,
+                        height: 200,
                         child: Hero(
                           tag: food['foodImage'],
                           child: Image.network("${food['foodImage']}"),
@@ -219,7 +231,7 @@ class FoodDetails extends StatelessWidget {
               );
             }),
       ),
-      backgroundColor: AppColor.themeColor,
+      backgroundColor: AppColor.themeColor.withOpacity(0.7),
     );
   }
 }

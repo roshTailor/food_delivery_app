@@ -171,7 +171,9 @@ class HomePage extends StatelessWidget {
                                               ? Icon(CupertinoIcons.heart_fill, color: AppColor.themeColor,)
                                               : const Icon(CupertinoIcons.heart, color: AppColor.placeholder,),
                                           splashRadius: 5,
-                                          onPressed: () {}/*controller.updateFavourite(index, data[index]['fav']),*/
+                                          onPressed: () {
+                                            controller.updateFavourite(data[index].id, data[index]['foodInFavourite']);
+                                          }/*controller.updateFavourite(index, data[index]['fav']),*/
                                         ),
                                       ),
                                       Container(
@@ -200,7 +202,7 @@ class HomePage extends StatelessWidget {
                                             Align(
                                               alignment: Alignment.bottomRight,
                                               child: GestureDetector(
-                                                //onTap: () => controller.addCart(context, index, data[index]['cart']),
+                                               onTap: () => controller.addCart(data[index].id, data[index]['cart']),
                                                 child: Container(
                                                   height: ScreenSize.height * 0.060,
                                                   width: ScreenSize.width * 0.14,
@@ -215,25 +217,6 @@ class HomePage extends StatelessWidget {
                                           ],
                                         ),
                                       ),
-                                      /*Padding(
-                                        padding: const EdgeInsets.only(left: 15),
-                                        child: Text("₹ ${data[index]['foodPrice']}"),
-                                      ),
-                                      Align(
-                                        alignment: Alignment.bottomRight,
-                                        child: GestureDetector(
-                                          //onTap: () => controller.addCart(context, index, data[index]['cart']),
-                                          child: Container(
-                                            height: ScreenSize.height * 0.060,
-                                            width: ScreenSize.width * 0.14,
-                                            decoration: BoxDecoration(
-                                              color: AppColor.themeColor,
-                                              borderRadius: const BorderRadius.only(topLeft: Radius.circular(20), bottomRight: Radius.circular(20)),
-                                            ),
-                                            child: const Icon(CupertinoIcons.cart, color: AppColor.placeholderBg,),
-                                          ),
-                                        ),
-                                      )*/
                                     ],
                                   ),
                                 ),
