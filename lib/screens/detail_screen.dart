@@ -160,7 +160,7 @@ class FoodDetails extends StatelessWidget {
 
                                         ),
                                         child: Text(
-                                          "${food['foodQuantity']}",
+                                          "$controller",
                                           style:  TextStyle(
                                               fontSize: 20,
                                               color: AppColor.themeColor,

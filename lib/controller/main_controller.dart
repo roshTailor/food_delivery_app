@@ -71,7 +71,6 @@ class MainController extends GetxController {
 
     update();
   }
-
   quantityIncrement(String index, int qty) async {
     if (qty > 0) qty++;
     update();
