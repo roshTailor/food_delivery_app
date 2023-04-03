@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 
 import '../utils/colors.dart';
 import '../utils/font.dart';
+import 'detail_screen.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -16,9 +17,8 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetBuilder(
       init: MainController(),
-      builder: (Object controller) {
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+      builder: (MainController controller) {
+        return ListView(
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -86,34 +86,46 @@ class HomePage extends StatelessWidget {
             const SizedBox(
               height: 8,
             ),
-            Row(
-              children: [
-                Column(
-                  children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(10),
+            SizedBox(
+              height: 30,
+              child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: controller.categoryTab.length,
+                  itemBuilder: (context, index) {
+                    return GestureDetector(
+                      onTap: () {
+                        controller.selectFoodCategory(index);
+                        controller.categoryValue(index);
+                      },
                       child: Container(
-                        width: Get.width / 5,
-                        height: Get.height / 10,
-                        color: Colors.green,
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        alignment: Alignment.center,
+                        margin: const EdgeInsets.only(right: 10),
+                        height: 25,
+                        child: Text(
+                          "${controller.categoryTab[index]}",
+                          style: TextStyle(
+                              color: (controller.currentCategory == index)
+                                  ? AppColor.themeColor
+                                  : AppColor.placeholder,
+                              fontSize: 18,
+                              fontWeight: FontWeight.w500),
+                        ),
                       ),
-                    ),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    Text(
-                      "food name",
-                      style: AppFont.bodyText,
-                    ),
-                  ],
-                )
-              ],
+                    );
+                  }),
             ),
             SizedBox(
-              height: ScreenSize.height * 0.50,
+              height: ScreenSize.height/1.6,
               child: StreamBuilder(
-                  stream:
-                      FirebaseFirestore.instance.collection('food').snapshots(),
+                  stream: (controller.val == 'All')
+                      ? FirebaseFirestore.instance
+                          .collection('food')
+                          .snapshots()
+                      : FirebaseFirestore.instance
+                          .collection('food')
+                          .where('foodCategory', isEqualTo: controller.val)
+                          .snapshots(),
                   builder: (context, snapShot) {
                     if (snapShot.hasError) {
                       return const Center(
@@ -127,40 +139,106 @@ class HomePage extends StatelessWidget {
                       ));
                     } else {
                       return GridView.builder(
-                        itemCount: snapShot.data!.docs.length,
+                          itemCount: snapShot.data!.docs.length,
+                          //shrinkWrap: true,
                           gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
+                              const SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 2,
-                            childAspectRatio: 1 / 1.25,
+                            childAspectRatio: 1 / 1.35,
                             crossAxisSpacing: 10,
                             mainAxisSpacing: 10,
                           ),
                           itemBuilder: (context, index) {
                             List data = snapShot.data!.docs;
-                            if (data[index]['foodCategory'] == 'Fruits') {
-                              return Card(
+                            return GestureDetector(
+                              onTap: () => Get.to(() => FoodDetails(index: index, food: data[index],)),
+                              child: Card(
                                 elevation: 3,
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(25)),
                                 child: Container(
-                                  padding: EdgeInsets.all(10),
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(25),
                                   ),
                                   child: Column(
-                                    // mainAxisAlignment:
-                                    //     MainAxisAlignment.spaceBetween,
-                                    // crossAxisAlignment: CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
-                                      Text(data[index]['foodName']),
-                                      Text(data[index]['foodCategory'])
+                                      Container(
+                                        alignment: Alignment.centerRight,
+                                        child: IconButton(
+                                          icon: (data[index]['foodInFavourite'])
+                                              ? Icon(CupertinoIcons.heart_fill, color: AppColor.themeColor,)
+                                              : const Icon(CupertinoIcons.heart, color: AppColor.placeholder,),
+                                          splashRadius: 5,
+                                          onPressed: () {}/*controller.updateFavourite(index, data[index]['fav']),*/
+                                        ),
+                                      ),
+                                      Container(
+                                        alignment: Alignment.center,
+                                        height : 60,
+                                        child: Hero(
+                                          tag: data[index]['foodImage'],
+                                          child: Image.network("${data[index]['foodImage']}"),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.only(left: 15),
+                                        child: Text("${data[index]['foodName']}",
+                                          style: const TextStyle(
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.only(left: 15),
+                                        child: Row(
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text("₹ ${data[index]['foodPrice']}",style: AppFont.bodyText1,),
+                                            Align(
+                                              alignment: Alignment.bottomRight,
+                                              child: GestureDetector(
+                                                //onTap: () => controller.addCart(context, index, data[index]['cart']),
+                                                child: Container(
+                                                  height: ScreenSize.height * 0.060,
+                                                  width: ScreenSize.width * 0.14,
+                                                  decoration: BoxDecoration(
+                                                    color: AppColor.themeColor,
+                                                    borderRadius: const BorderRadius.only(topLeft: Radius.circular(20), bottomRight: Radius.circular(20)),
+                                                  ),
+                                                  child: const Icon(CupertinoIcons.cart, color: AppColor.placeholderBg,),
+                                                ),
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                      /*Padding(
+                                        padding: const EdgeInsets.only(left: 15),
+                                        child: Text("₹ ${data[index]['foodPrice']}"),
+                                      ),
+                                      Align(
+                                        alignment: Alignment.bottomRight,
+                                        child: GestureDetector(
+                                          //onTap: () => controller.addCart(context, index, data[index]['cart']),
+                                          child: Container(
+                                            height: ScreenSize.height * 0.060,
+                                            width: ScreenSize.width * 0.14,
+                                            decoration: BoxDecoration(
+                                              color: AppColor.themeColor,
+                                              borderRadius: const BorderRadius.only(topLeft: Radius.circular(20), bottomRight: Radius.circular(20)),
+                                            ),
+                                            child: const Icon(CupertinoIcons.cart, color: AppColor.placeholderBg,),
+                                          ),
+                                        ),
+                                      )*/
                                     ],
                                   ),
                                 ),
-                              );
-                            } else {
-                              return Container();
-                            }
+                              ),
+                            );
                           });
                     }
                   }),
@@ -172,18 +250,3 @@ class HomePage extends StatelessWidget {
   }
 }
 
-/*ListView(
-                        children: snapShot.data!.docs.map((e) {
-                          Map<String, dynamic> data =
-                          e.data();
-                          if(data['foodCategory']=='FastFood'){
-                            return ListTile(
-                              title: Text(data['foodName']),
-                              subtitle: Text(data['foodCategory']),
-                            );
-                          }
-                          else{
-                            return Container();
-                          }
-                        }).toList(),
-                      );*/
