@@ -17,7 +17,7 @@ samples, guidance on mobile development, and a full API reference.
 <table>
    
    <tr>
-      <td><img src="https://user-images.githubusercontent.com/120237924/229590579-5ea3304c-3952-4f08-8905-e8f2e4a3f947.png" alt="1" width = 360px height = 640px></td>
+      <td><img src="assets/image/4.png" alt="1" width = 360px height = 640px></td>
 
       <td><img src="https://user-images.githubusercontent.com/120237924/229590585-2241f077-47fa-4b02-ab3b-a01efd8e87d1.png" align="right" alt="2" width = 360px height = 640px> </td>
   </tr>
