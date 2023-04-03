@@ -8,6 +8,7 @@ import '../controller/main_controller.dart';
 import '../utils/colors.dart';
 import 'cart_screen.dart';
 import 'fav_screen.dart';
+import 'offer_screen.dart';
 
 
 // ignore: must_be_immutable
@@ -30,9 +31,9 @@ class DashBoard extends StatelessWidget {
               index: mainController.index,
               children:  const [
                 HomePage(),
-                Favourite(),
                 Cart(),
-                Profile()
+                Favourite(),
+                Offer()
               ],
             ),
           ),
@@ -54,12 +55,6 @@ class DashBoard extends StatelessWidget {
                 tooltip: "Home",
               ),
               BottomNavigationBarItem(
-                activeIcon: Icon(CupertinoIcons.tag_fill),
-                icon: Icon(CupertinoIcons.tag),
-                label: "Offers",
-                tooltip: "Offers",
-              ),
-              BottomNavigationBarItem(
                 activeIcon: Icon(CupertinoIcons.cart_fill),
                 icon: Icon(CupertinoIcons.cart),
                 label: "Cart",
@@ -70,6 +65,12 @@ class DashBoard extends StatelessWidget {
                 icon: Icon(CupertinoIcons.heart),
                 label: "Like",
                 tooltip: "Like",
+              ),
+              BottomNavigationBarItem(
+                activeIcon: Icon(CupertinoIcons.tag_fill),
+                icon: Icon(CupertinoIcons.tag),
+                label: "Offers",
+                tooltip: "Offers",
               ),
             ],
           )

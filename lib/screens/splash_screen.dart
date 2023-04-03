@@ -19,8 +19,8 @@ class _SplashState extends State<Splash> {
     // TODO: implement initState
     super.initState();
     Timer(
-      const Duration(seconds: 4),
-          () => Get.off(() =>  DashBoard()),
+      const Duration(seconds: 3),
+          () => Get.off(() =>  const DashBoard()),
     );
   }
 

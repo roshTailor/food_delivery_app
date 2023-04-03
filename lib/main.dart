@@ -8,11 +8,9 @@ void main() {
   WidgetsFlutterBinding.ensureInitialized();
   Firebase.initializeApp();
   runApp(
-    GetMaterialApp(
-      routes: {
-        '/': (context) => const Splash(),
-        'HomePage': (context) => DashBoard(),
-      },
+    const GetMaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Splash(),
     ),
   );
 }

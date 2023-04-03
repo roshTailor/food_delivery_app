@@ -15,4 +15,8 @@ class AppFont {
     fontSize: 22,
     color: Colors.blueGrey,
   );
+  static TextStyle bodyText3 = const TextStyle(
+    fontSize: 24,
+    color: Color(0xffFF3131),
+  );
 }

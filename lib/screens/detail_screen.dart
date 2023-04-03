@@ -9,9 +9,8 @@ import 'package:get/get.dart';
 
 class FoodDetails extends StatelessWidget {
   QueryDocumentSnapshot food;
-  int index;
 
-  FoodDetails({Key? key, required this.food, required this.index})
+  FoodDetails({Key? key, required this.food})
       : super(key: key);
 
   @override
@@ -153,12 +152,20 @@ class FoodDetails extends StatelessWidget {
                                             Icons.remove_circle,
                                             color: AppColor.placeholder,size: 40,
                                           )),
-                                      Text(
-                                        "${food['foodQuantity']}",
-                                        style:  TextStyle(
-                                            fontSize: 20,
-                                            color: AppColor.themeColor,
-                                            fontWeight: FontWeight.bold),
+                                      Container(
+                                        height: 20,
+                                        decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          border: Border.all(color: AppColor.placeholderBg,width: 1),
+
+                                        ),
+                                        child: Text(
+                                          "${food['foodQuantity']}",
+                                          style:  TextStyle(
+                                              fontSize: 20,
+                                              color: AppColor.themeColor,
+                                              fontWeight: FontWeight.bold),
+                                        ),
                                       ),
                                       IconButton(
                                           onPressed: () =>
@@ -193,7 +200,7 @@ class FoodDetails extends StatelessWidget {
                                 alignment: Alignment.center,
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(20),
-                                    color: AppColor.themeColor,
+                                    color: (food['foodInCart']==false)?AppColor.themeColor:AppColor.placeholder,
                                     boxShadow: [
                                       BoxShadow(
                                           color: Colors.black.withOpacity(0.1),
@@ -201,10 +208,10 @@ class FoodDetails extends StatelessWidget {
                                           blurRadius: 2,
                                           offset: const Offset(0, 3))
                                     ]),
-                                child: const Text(
+                                child:  Text(
                                   "Add to cart",
                                   style: TextStyle(
-                                      color: AppColor.placeholderBg,
+                                      color: (food['foodInCart']==false)?AppColor.placeholder:AppColor.placeholderBg,
                                       fontWeight: FontWeight.bold,
                                       fontSize: 20),
                                 ),

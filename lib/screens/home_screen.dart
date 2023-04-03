@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:food_delivery_app/controller/main_controller.dart';
+import 'package:food_delivery_app/screens/profile_screen.dart';
 import 'package:food_delivery_app/utils/size.dart';
 import 'package:get/get.dart';
 
@@ -28,10 +29,13 @@ class HomePage extends StatelessWidget {
                   style: AppFont.bodyText,
                 ),
                 IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Get.to(() => const Profile());
+                  },
                   icon: Icon(
-                    CupertinoIcons.shopping_cart,
+                    CupertinoIcons.person_alt_circle,
                     color: AppColor.themeColor,
+                    size: 40,
                   ),
                 )
               ],
@@ -116,7 +120,7 @@ class HomePage extends StatelessWidget {
                   }),
             ),
             SizedBox(
-              height: ScreenSize.height/1.6,
+              height: ScreenSize.height / 1.6,
               child: StreamBuilder(
                   stream: (controller.val == 'All')
                       ? FirebaseFirestore.instance
@@ -151,7 +155,9 @@ class HomePage extends StatelessWidget {
                           itemBuilder: (context, index) {
                             List data = snapShot.data!.docs;
                             return GestureDetector(
-                              onTap: () => Get.to(() => FoodDetails(index: index, food: data[index],)),
+                              onTap: () => Get.to(() => FoodDetails(
+                                    food: data[index],
+                                  )),
                               child: Card(
                                 elevation: 3,
                                 shape: RoundedRectangleBorder(
@@ -161,32 +167,47 @@ class HomePage extends StatelessWidget {
                                     borderRadius: BorderRadius.circular(25),
                                   ),
                                   child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Container(
                                         alignment: Alignment.centerRight,
                                         child: IconButton(
-                                          icon: (data[index]['foodInFavourite'])
-                                              ? Icon(CupertinoIcons.heart_fill, color: AppColor.themeColor,)
-                                              : const Icon(CupertinoIcons.heart, color: AppColor.placeholder,),
-                                          splashRadius: 5,
-                                          onPressed: () {
-                                            controller.updateFavourite(data[index].id, data[index]['foodInFavourite']);
-                                          }/*controller.updateFavourite(index, data[index]['fav']),*/
-                                        ),
+                                            icon: (data[index]
+                                                    ['foodInFavourite'])
+                                                ? Icon(
+                                                    CupertinoIcons.heart_fill,
+                                                    color: AppColor.themeColor,
+                                                  )
+                                                : const Icon(
+                                                    CupertinoIcons.heart,
+                                                    color: AppColor.placeholder,
+                                                  ),
+                                            splashRadius: 5,
+                                            onPressed: () {
+                                              controller.updateFavourite(
+                                                  data[index].id,
+                                                  data[index]
+                                                      ['foodInFavourite']);
+                                            } /*controller.updateFavourite(index, data[index]['fav']),*/
+                                            ),
                                       ),
                                       Container(
                                         alignment: Alignment.center,
-                                        height : 60,
+                                        height: 60,
                                         child: Hero(
                                           tag: data[index]['foodImage'],
-                                          child: Image.network("${data[index]['foodImage']}"),
+                                          child: Image.network(
+                                              "${data[index]['foodImage']}"),
                                         ),
                                       ),
                                       Padding(
-                                        padding: const EdgeInsets.only(left: 15),
-                                        child: Text("${data[index]['foodName']}",
+                                        padding:
+                                            const EdgeInsets.only(left: 15),
+                                        child: Text(
+                                          "${data[index]['foodName']}",
                                           style: const TextStyle(
                                             fontSize: 18,
                                             fontWeight: FontWeight.w600,
@@ -194,23 +215,43 @@ class HomePage extends StatelessWidget {
                                         ),
                                       ),
                                       Padding(
-                                        padding: const EdgeInsets.only(left: 15),
+                                        padding:
+                                            const EdgeInsets.only(left: 15),
                                         child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
                                           children: [
-                                            Text("₹ ${data[index]['foodPrice']}",style: AppFont.bodyText1,),
+                                            Text(
+                                              "₹ ${data[index]['foodPrice']}",
+                                              style: AppFont.bodyText1,
+                                            ),
                                             Align(
                                               alignment: Alignment.bottomRight,
                                               child: GestureDetector(
-                                               onTap: () => controller.addCart(data[index].id, data[index]['cart']),
+                                                onTap: () => controller.addCart(
+                                                    data[index].id,
+                                                    data[index]['cart']),
                                                 child: Container(
-                                                  height: ScreenSize.height * 0.060,
-                                                  width: ScreenSize.width * 0.14,
+                                                  height:
+                                                      ScreenSize.height * 0.060,
+                                                  width:
+                                                      ScreenSize.width * 0.14,
                                                   decoration: BoxDecoration(
                                                     color: AppColor.themeColor,
-                                                    borderRadius: const BorderRadius.only(topLeft: Radius.circular(20), bottomRight: Radius.circular(20)),
+                                                    borderRadius:
+                                                        const BorderRadius.only(
+                                                            topLeft:
+                                                                Radius.circular(
+                                                                    20),
+                                                            bottomRight:
+                                                                Radius.circular(
+                                                                    20)),
                                                   ),
-                                                  child: const Icon(CupertinoIcons.cart, color: AppColor.placeholderBg,),
+                                                  child: const Icon(
+                                                    CupertinoIcons.cart,
+                                                    color:
+                                                        AppColor.placeholderBg,
+                                                  ),
                                                 ),
                                               ),
                                             )
@@ -232,4 +273,3 @@ class HomePage extends StatelessWidget {
     );
   }
 }
-
