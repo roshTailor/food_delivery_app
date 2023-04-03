@@ -1,6 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:food_delivery_app/controller/main_controller.dart';
+import 'package:food_delivery_app/utils/size.dart';
 import 'package:get/get.dart';
 
 import '../utils/colors.dart';
@@ -58,7 +61,7 @@ class HomePage extends StatelessWidget {
               ),
             ),
             Container(
-              height: Get.height / 14,
+              height: Get.height / 18,
               width: double.infinity,
               decoration: const ShapeDecoration(
                 shape: StadiumBorder(),
@@ -76,9 +79,6 @@ class HomePage extends StatelessWidget {
                   hintStyle: const TextStyle(
                     color: AppColor.placeholder,
                     fontSize: 18,
-                  ),
-                  contentPadding: const EdgeInsets.only(
-                    top: 17,
                   ),
                 ),
               ),
@@ -108,10 +108,82 @@ class HomePage extends StatelessWidget {
                   ],
                 )
               ],
-            )
+            ),
+            SizedBox(
+              height: ScreenSize.height * 0.50,
+              child: StreamBuilder(
+                  stream:
+                      FirebaseFirestore.instance.collection('food').snapshots(),
+                  builder: (context, snapShot) {
+                    if (snapShot.hasError) {
+                      return const Center(
+                        child: Text("Something went Wrong!!"),
+                      );
+                    } else if (snapShot.connectionState ==
+                        ConnectionState.waiting) {
+                      return Center(
+                          child: CircularProgressIndicator(
+                        color: AppColor.themeColor,
+                      ));
+                    } else {
+                      return GridView.builder(
+                        itemCount: snapShot.data!.docs.length,
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            childAspectRatio: 1 / 1.25,
+                            crossAxisSpacing: 10,
+                            mainAxisSpacing: 10,
+                          ),
+                          itemBuilder: (context, index) {
+                            List data = snapShot.data!.docs;
+                            if (data[index]['foodCategory'] == 'Fruits') {
+                              return Card(
+                                elevation: 3,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(25)),
+                                child: Container(
+                                  padding: EdgeInsets.all(10),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(25),
+                                  ),
+                                  child: Column(
+                                    // mainAxisAlignment:
+                                    //     MainAxisAlignment.spaceBetween,
+                                    // crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(data[index]['foodName']),
+                                      Text(data[index]['foodCategory'])
+                                    ],
+                                  ),
+                                ),
+                              );
+                            } else {
+                              return Container();
+                            }
+                          });
+                    }
+                  }),
+            ),
           ],
         );
       },
     );
   }
 }
+
+/*ListView(
+                        children: snapShot.data!.docs.map((e) {
+                          Map<String, dynamic> data =
+                          e.data();
+                          if(data['foodCategory']=='FastFood'){
+                            return ListTile(
+                              title: Text(data['foodName']),
+                              subtitle: Text(data['foodCategory']),
+                            );
+                          }
+                          else{
+                            return Container();
+                          }
+                        }).toList(),
+                      );*/

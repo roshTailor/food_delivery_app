@@ -1,13 +1,14 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 
 class MainController extends GetxController {
   static MainController mainController = Get.put(MainController());
-  CollectionReference favouriteFood = FirebaseFirestore.instance.collection('favouriteFood');
+  //CollectionReference favouriteFood = FirebaseFirestore.instance.collection('favouriteFood');
   int index = 0;
   String category = "All";
   pageIndex(int val) {
-
     index= val;
+    print(index);
     update();
   }
   selectFoodCategory(String val) {
@@ -15,7 +16,7 @@ class MainController extends GetxController {
     update();
   }
 
-  updateFavourite(int index, bool val) async {
+  /*updateFavourite(int index, bool val) async {
     CollectionReference foods = FirebaseFirestore.instance
         .collection('foodsProduct')
         .doc(HomeController.homeController.category.value)
@@ -43,5 +44,5 @@ class MainController extends GetxController {
         }
       }
     }
-  }
+  }*/
 }

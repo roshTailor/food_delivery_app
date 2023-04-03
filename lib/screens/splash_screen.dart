@@ -20,7 +20,7 @@ class _SplashState extends State<Splash> {
     super.initState();
     Timer(
       const Duration(seconds: 4),
-          () => Get.off(() =>  HomePage()),
+          () => Get.off(() =>  DashBoard()),
     );
   }
 
